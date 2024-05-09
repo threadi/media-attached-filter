@@ -2,7 +2,7 @@
 Contributors: threadi
 Tags: media library, media, attached
 Requires at least: 6.2
-Tested up to: 6.5.2
+Tested up to: 6.5.3
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
