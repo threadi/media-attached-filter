@@ -4,7 +4,7 @@
  * Description:       Adds a new filter for media library to filter for files attached to posts or pages.
  * Requires at least: 6.2
  * Requires PHP:      8.0
- * Version:           1.0.0
+ * Version:           @@VersionNumber@@
  * Author:            Thomas Zwirner
  * Author URI:        https://www.thomaszwirner.de
  * License:           GPL-2.0-or-later
