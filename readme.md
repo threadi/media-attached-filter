@@ -53,3 +53,7 @@ Run in main directory:
 ### Repair
 
 `vendor/bin/phpcbf --extensions=php --ignore=*/vendor/* --standard=ruleset.xml .`
+
+### Generate documentation
+
+`vendor/bin/wp-documentor parse . --exclude=vendor --format=markdown --output=doc/hooks.md --prefix=media_attached_filter_`
