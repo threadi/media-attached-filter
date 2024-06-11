@@ -14,6 +14,9 @@
  * @package media-attached-filter
  */
 
+// prevent direct access.
+defined( 'ABSPATH' ) || exit;
+
 // do nothing if PHP-version is not 8.0 or newer.
 if ( version_compare( PHP_VERSION, '8.0', '<' ) ) {
 	return;
@@ -24,7 +27,7 @@ if ( version_compare( PHP_VERSION, '8.0', '<' ) ) {
  *
  * @return void
  */
-function maf_add_filter(): void {
+function media_attached_filter_add_filter(): void {
 	// bail if get_current_screen is not available.
 	if ( ! function_exists( 'get_current_screen' ) ) {
 		return;
@@ -49,14 +52,14 @@ function maf_add_filter(): void {
 
 	<?php
 }
-add_action( 'restrict_manage_posts', 'maf_add_filter' );
+add_action( 'restrict_manage_posts', 'media_attached_filter_add_filter' );
 
 /**
  * Add own CSS and JS for backend.
  *
  * @return void
  */
-function maf_add_files(): void {
+function media_attached_filter_add_files(): void {
 	// admin-specific styles.
 	wp_enqueue_style(
 		'maf-admin',
@@ -84,14 +87,14 @@ function maf_add_files(): void {
 		)
 	);
 }
-add_action( 'admin_enqueue_scripts', 'maf_add_files' );
+add_action( 'admin_enqueue_scripts', 'media_attached_filter_add_files' );
 
 /**
  * Run search for entries with given keyword and return resulting limited list.
  *
  * @return void
  */
-function maf_search_ajax(): void {
+function media_attached_filter_search_ajax(): void {
 	// check nonce.
 	check_ajax_referer( 'maf-search', 'nonce' );
 
@@ -127,7 +130,7 @@ function maf_search_ajax(): void {
 		)
 	);
 }
-add_action( 'wp_ajax_maf_search', 'maf_search_ajax' );
+add_action( 'wp_ajax_maf_search', 'media_attached_filter_search_ajax' );
 
 /**
  * Run the filter.
@@ -136,7 +139,7 @@ add_action( 'wp_ajax_maf_search', 'maf_search_ajax' );
  *
  * @return void
  */
-function maf_run_filter( WP_Query $query ): void {
+function media_attached_filter_run_filter( WP_Query $query ): void {
 	if ( is_admin() && $query->is_main_query() ) {
 		$attached = filter_input( INPUT_GET, 'maf_attached', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
 		if ( ! empty( $attached ) ) {
@@ -156,4 +159,4 @@ function maf_run_filter( WP_Query $query ): void {
 		}
 	}
 }
-add_action( 'pre_get_posts', 'maf_run_filter' );
+add_action( 'pre_get_posts', 'media_attached_filter_run_filter' );

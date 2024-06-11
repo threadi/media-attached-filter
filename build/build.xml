@@ -81,8 +81,7 @@
         <delete file="${build.dir}/${plugin.slug}_${plugin.version}.zip"/>
         <zip destfile="${build.dir}/${plugin.slug}_${plugin.version}.zip" comment="${plugin.slug} ${plugin.version} release">
             <zipfileset dir="${src.dir}/admin" prefix="${plugin.slug}/admin" />
-            <zipfileset dir="${src.dir}" includes="readme.txt" prefix="${plugin.slug}" />
-            <zipfileset dir="${src.dir}" includes="uninstall-release.php" fullpath="${plugin.slug}/uninstall.php" />
+            <zipfileset dir="${src.dir}" includes="uninstall.php,readme.txt" prefix="${plugin.slug}" />
             <zipfileset dir="${src.dir}" includes="${plugin.slug}-release.php" fullpath="${plugin.slug}/${plugin.slug}.php" />
         </zip>
         <antcall target="autoloader-generation-dev" />
