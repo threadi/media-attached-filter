@@ -46,8 +46,6 @@ jobs:
           rm -fr languages
           rm -fr releases
           rm changelog.md
-          rm package.json
-          rm package-lock.json
           rm ruleset.xml
           cd ..
           zip -r -q ${{ github.event.repository.name }}_${{ github.ref_name }}.zip ${{ github.event.repository.name }}/* -x "*/.git/*" "*/.github/*" "*/phpcs.xml" "*/composer.json" "*/composer.lock" "*/readme.md" "*/.gitignore" "*/vendor/*" "*/node_modules/*" "*/svn/*" "*/releases/*"
