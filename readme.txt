@@ -2,7 +2,7 @@
 Contributors: threadi
 Tags: media library, media, attached
 Requires at least: 6.2
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 8.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -25,7 +25,7 @@ The development repository is on [GitHub](https://github.com/threadi/media-attac
 
 == Changelog ==
 
-= 1.0.1 =
+= @@VersionNumber@@ =
 * Added GitHub action to build releases
 * Moved changelog to GitHub
 
