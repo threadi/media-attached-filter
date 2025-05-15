@@ -48,11 +48,11 @@ Run in main directory:
 
 ### Run
 
-`vendor/bin/phpcs --extensions=php --ignore=*/vendor/* --standard=ruleset.xml .`
+`vendor/bin/phpcs --standard=ruleset.xml .`
 
 ### Repair
 
-`vendor/bin/phpcbf --extensions=php --ignore=*/vendor/* --standard=ruleset.xml .`
+`vendor/bin/phpcbf --standard=ruleset.xml .`
 
 ### Generate documentation
 

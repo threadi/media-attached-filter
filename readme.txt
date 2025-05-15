@@ -26,7 +26,6 @@ The development repository is on [GitHub](https://github.com/threadi/media-attac
 == Changelog ==
 
 = @@VersionNumber@@ =
-* Added GitHub action to build releases
-* Moved changelog to GitHub
+- Added check with PHPStan to reduce potential PHP-errors
 
 [older changes](https://github.com/threadi/media-attached-filter/blob/master/changelog.md)

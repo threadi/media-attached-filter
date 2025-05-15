@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // do nothing if PHP-version is not 8.0 or newer.
-if ( version_compare( PHP_VERSION, '8.0', '<' ) ) {
+if ( PHP_VERSION_ID < 80000 ) { // @phpstan-ignore smaller.alwaysFalse
 	return;
 }
 
