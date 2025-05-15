@@ -18,7 +18,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // do nothing if PHP-version is not 8.0 or newer.
-if ( version_compare( PHP_VERSION, '8.0', '<' ) ) {
+if ( PHP_VERSION_ID < 80000 ) { // @phpstan-ignore smaller.alwaysFalse
 	return;
 }
 
@@ -36,6 +36,11 @@ function media_attached_filter_add_filter(): void {
 	// get the actual screen.
 	$screen = get_current_screen();
 
+	// bail if screen is null.
+	if ( ! $screen instanceof WP_Screen ) {
+		return;
+	}
+
 	// bail if screen is not media library.
 	if ( 'upload' !== $screen->base ) {
 		return;
@@ -43,6 +48,9 @@ function media_attached_filter_add_filter(): void {
 
 	// get actual value from request.
 	$attached = filter_input( INPUT_GET, 'maf_attached', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+	if ( is_null( $attached ) ) {
+		$attached = '';
+	}
 
 	// show filter with AJAX-function to search.
 	?>
@@ -65,7 +73,7 @@ function media_attached_filter_add_files(): void {
 		'maf-admin',
 		plugin_dir_url( __FILE__ ) . '/admin/styles.css',
 		array(),
-		filemtime( plugin_dir_path( __FILE__ ) . '/admin/styles.css' ),
+		(string) filemtime( plugin_dir_path( __FILE__ ) . '/admin/styles.css' ),
 	);
 
 	// backend-JS.
@@ -73,7 +81,7 @@ function media_attached_filter_add_files(): void {
 		'maf-admin',
 		plugins_url( '/admin/js.js', __FILE__ ),
 		array( 'jquery' ),
-		filemtime( plugin_dir_path( __FILE__ ) . '/admin/js.js' ),
+		(string) filemtime( plugin_dir_path( __FILE__ ) . '/admin/js.js' ),
 		true
 	);
 
@@ -119,7 +127,13 @@ function media_attached_filter_search_ajax(): void {
 	// get results.
 	$list = array();
 	foreach ( $result->posts as $post_id ) {
-		$list[ $post_id ] = get_the_title( $post_id );
+		// bail if object is WP_Post.
+		if ( $post_id instanceof WP_Post ) {
+			continue;
+		}
+
+		// add the entry to the resulting list.
+		$list[ absint( $post_id ) ] = get_the_title( $post_id );
 	}
 
 	// return resulting list.
@@ -140,23 +154,44 @@ add_action( 'wp_ajax_maf_search', 'media_attached_filter_search_ajax' );
  * @return void
  */
 function media_attached_filter_run_filter( WP_Query $query ): void {
-	if ( is_admin() && $query->is_main_query() ) {
-		$attached = filter_input( INPUT_GET, 'maf_attached', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
-		if ( ! empty( $attached ) ) {
-			$query_to_get_post_id = array(
-				'post_type'   => array( 'post', 'page' ),
-				'post_status' => 'any',
-				'title'       => $attached,
-				'fields'      => 'ids',
-			);
-			$results              = new WP_Query( $query_to_get_post_id );
-			if ( 1 === $results->post_count ) {
-				$query->set( 'post_parent', $results->posts[0] );
-			} else {
-				// let the query return nothing.
-				$query->set( 'post_parent', -1 );
-			}
-		}
+	// bail if this is not wp-admin.
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	// bail if this is not the main query.
+	if ( ! $query->is_main_query() ) {
+		return;
+	}
+
+	// get the attribute from request.
+	$attached = filter_input( INPUT_GET, 'maf_attached', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+
+	// bail if attribute is not set.
+	if ( is_null( $attached ) ) {
+		return;
+	}
+
+	// bail if attribute is empty.
+	if ( empty( $attached ) ) {
+		return;
+	}
+
+	// query for the attached page or post.
+	$query_to_get_post_id = array(
+		'post_type'   => array( 'post', 'page' ),
+		'post_status' => 'any',
+		'title'       => $attached,
+		'fields'      => 'ids',
+	);
+	$results              = new WP_Query( $query_to_get_post_id );
+
+	// if we have only one result, add it to the main query.
+	if ( 1 === $results->post_count ) {
+		$query->set( 'post_parent', $results->posts[0] );
+	} else {
+		// otherwise let the query return nothing.
+		$query->set( 'post_parent', -1 );
 	}
 }
 add_action( 'pre_get_posts', 'media_attached_filter_run_filter' );

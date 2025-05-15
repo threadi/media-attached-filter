@@ -3,6 +3,16 @@
 
     <description>Media Attached Filter Coding Standards</description>
 
+    <!--
+	   Only scan files with .php extension.
+   -->
+    <arg name="extensions" value="php" />
+
+    <!--
+        Directories to exclude.
+    -->
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
     <rule ref="WordPress-Docs"/>
     <rule ref="WordPress-Extra"/>
     <rule ref="WordPress"/>

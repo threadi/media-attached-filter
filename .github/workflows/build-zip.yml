@@ -18,11 +18,14 @@ jobs:
           composer install
           composer update
 
+      - name: Run PHPStan check
+        run: vendor/bin/phpstan analyse
+
       - name: Run WordPress Coding Standard fixes
-        run: vendor/bin/phpcbf --extensions=php --ignore=*/vendor/* --standard=ruleset.xml .
+        run: vendor/bin/phpcbf --standard=ruleset.xml .
 
       - name: Run WordPress Coding Standard checks
-        run: vendor/bin/phpcs --extensions=php --ignore=*/vendor/* --standard=ruleset.xml .
+        run: vendor/bin/phpcs --standard=ruleset.xml .
 
       - name: Set version number
         uses: richardrigutins/replace-in-files@v2
