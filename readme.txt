@@ -8,11 +8,11 @@ License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Stable tag: @@VersionNumber@@
 
-Filter in the media library for files that are assigned to any post type with thumbnail support.
+Filter in the media library for files that are assigned to any post type.
 
 == Description ==
 
-Filter in the media library for files that are assigned to any post type with thumbnail support. The files must be assigned to the pages or posts for the filter to work.
+Filter in the media library for files that are assigned to any post type. The files must be assigned to the pages or posts for the filter to work.
 
 The development repository is on [GitHub](https://github.com/threadi/media-attached-filter).
 

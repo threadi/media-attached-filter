@@ -4,7 +4,11 @@
 
 ### Added
 
-- Added support for every post type with thumbnail support
+- Added support for every post type
+
+### Changed
+
+- Optimized encoding of characters in titles in request and response
 
 ## [1.1.0] - 15.05.2025
 

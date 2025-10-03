@@ -114,8 +114,8 @@ function media_attached_filter_search_ajax(): void {
 		wp_send_json( array( 'success' => false ) );
 	}
 
-    // get post types with thumbnail support.
-    $post_types = get_post_types_by_support( 'thumbnail' );
+    // get post types.
+    $post_types = get_post_types();
 
     // bail if list is empty.
     if( empty( $post_types ) ) {
@@ -141,7 +141,7 @@ function media_attached_filter_search_ajax(): void {
 		}
 
 		// add the entry to the resulting list.
-		$list[ absint( $post_id ) ] = get_the_title( $post_id );
+		$list[ absint( $post_id ) ] = get_post_field( 'post_title', $post_id, 'raw' );
 	}
 
 	// return resulting list.
@@ -173,7 +173,7 @@ function media_attached_filter_run_filter( WP_Query $query ): void {
 	}
 
 	// get the attribute from request.
-	$attached = filter_input( INPUT_GET, 'maf_attached', FILTER_SANITIZE_FULL_SPECIAL_CHARS );
+	$attached = filter_input( INPUT_GET, 'maf_attached', FILTER_SANITIZE_SPECIAL_CHARS );
 
 	// bail if attribute is not set.
 	if ( is_null( $attached ) ) {
@@ -185,8 +185,8 @@ function media_attached_filter_run_filter( WP_Query $query ): void {
 		return;
 	}
 
-    // get post types with thumbnail support.
-    $post_types = get_post_types_by_support( 'thumbnail' );
+    // get post types.
+    $post_types = get_post_types();
 
     // bail if list is empty.
     if( empty( $post_types ) ) {
