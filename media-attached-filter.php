@@ -114,9 +114,17 @@ function media_attached_filter_search_ajax(): void {
 		wp_send_json( array( 'success' => false ) );
 	}
 
+    // get post types with thumbnail support.
+    $post_types = get_post_types_by_support( 'thumbnail' );
+
+    // bail if list is empty.
+    if( empty( $post_types ) ) {
+        wp_send_json( array( 'success' => false ) );
+    }
+
 	// define query.
 	$query  = array(
-		'post_type'      => array( 'post', 'page' ),
+		'post_type'      => $post_types,
 		'post_status'    => 'any',
 		's'              => $keyword,
 		'fields'         => 'ids',
@@ -177,9 +185,17 @@ function media_attached_filter_run_filter( WP_Query $query ): void {
 		return;
 	}
 
+    // get post types with thumbnail support.
+    $post_types = get_post_types_by_support( 'thumbnail' );
+
+    // bail if list is empty.
+    if( empty( $post_types ) ) {
+        return;
+    }
+
 	// query for the attached page or post.
 	$query_to_get_post_id = array(
-		'post_type'   => array( 'post', 'page' ),
+		'post_type'   => $post_types,
 		'post_status' => 'any',
 		'title'       => $attached,
 		'fields'      => 'ids',

@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+### Added
+
+- Added support for every post type with thumbnail support
+
 ## [1.1.0] - 15.05.2025
 
 ### Added
