@@ -26,8 +26,7 @@ The development repository is on [GitHub](https://github.com/threadi/media-attac
 == Changelog ==
 
 = @@VersionNumber@@ =
-- Added support for every post type
-- Added link to support forum in plugin list
-- Optimized encoding of characters in titles in request and response
+- Added hook for supported post types
+- Use only public post types
 
 [older changes](https://github.com/threadi/media-attached-filter/blob/master/changelog.md)

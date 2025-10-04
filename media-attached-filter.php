@@ -115,7 +115,7 @@ function media_attached_filter_search_ajax(): void {
 	}
 
 	// get post types.
-	$post_types = get_post_types();
+	$post_types = media_attached_filter_get_post_types();
 
 	// bail if list is empty.
 	if ( empty( $post_types ) ) {
@@ -186,7 +186,7 @@ function media_attached_filter_run_filter( WP_Query $query ): void {
 	}
 
 	// get post types.
-	$post_types = get_post_types();
+	$post_types = media_attached_filter_get_post_types();
 
 	// bail if list is empty.
 	if ( empty( $post_types ) ) {
@@ -235,3 +235,21 @@ function media_attached_filter_add_row_meta_links( array $links, string $file ):
 	return array_merge( $links, $row_meta );
 }
 add_filter( 'plugin_row_meta', 'media_attached_filter_add_row_meta_links', 10, 2 );
+
+/**
+ * Return list of post types we support.
+ *
+ * @return array<int,string>
+ */
+function media_attached_filter_get_post_types(): array {
+	// get post types.
+	$post_types = get_post_types( array( 'public' => true ) );
+
+	/**
+	 * Filter the supported post types.
+	 *
+	 * @since 1.2.1 Available since 1.2.1.
+	 * @param array<int,string> $post_types List of post types.
+	 */
+	return apply_filters( 'media_attached_filter_post_types', $post_types );
+}
