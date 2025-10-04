@@ -1,6 +1,8 @@
 parameters:
   level: 8
   reportUnmatchedIgnoredErrors: false
+  ignoreErrors:
+    - "#WP_PLUGIN_DIR#"
   paths:
     - media-attached-filter.php
     - uninstall.php
