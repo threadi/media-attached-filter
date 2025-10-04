@@ -1,4 +1,4 @@
-=== Media attached filter ===
+=== Media Attached Filter ===
 Contributors: threadi
 Tags: media library, media, attached
 Requires at least: 6.2
@@ -26,6 +26,8 @@ The development repository is on [GitHub](https://github.com/threadi/media-attac
 == Changelog ==
 
 = @@VersionNumber@@ =
-- Added check with PHPStan to reduce potential PHP-errors
+- Added support for every post type
+- Added link to support forum in plugin list
+- Optimized encoding of characters in titles in request and response
 
 [older changes](https://github.com/threadi/media-attached-filter/blob/master/changelog.md)

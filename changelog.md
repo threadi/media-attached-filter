@@ -1,10 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [1.2.0] - 03.10.2025
 
 ### Added
 
 - Added support for every post type
+- Added link to support forum in plugin list
 
 ### Changed
 

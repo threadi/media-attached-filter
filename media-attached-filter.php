@@ -114,13 +114,13 @@ function media_attached_filter_search_ajax(): void {
 		wp_send_json( array( 'success' => false ) );
 	}
 
-    // get post types.
-    $post_types = get_post_types();
+	// get post types.
+	$post_types = get_post_types();
 
-    // bail if list is empty.
-    if( empty( $post_types ) ) {
-        wp_send_json( array( 'success' => false ) );
-    }
+	// bail if list is empty.
+	if ( empty( $post_types ) ) {
+		wp_send_json( array( 'success' => false ) );
+	}
 
 	// define query.
 	$query  = array(
@@ -185,13 +185,13 @@ function media_attached_filter_run_filter( WP_Query $query ): void {
 		return;
 	}
 
-    // get post types.
-    $post_types = get_post_types();
+	// get post types.
+	$post_types = get_post_types();
 
-    // bail if list is empty.
-    if( empty( $post_types ) ) {
-        return;
-    }
+	// bail if list is empty.
+	if ( empty( $post_types ) ) {
+		return;
+	}
 
 	// query for the attached page or post.
 	$query_to_get_post_id = array(
@@ -211,3 +211,27 @@ function media_attached_filter_run_filter( WP_Query $query ): void {
 	}
 }
 add_action( 'pre_get_posts', 'media_attached_filter_run_filter' );
+
+/**
+ * Add links in row meta.
+ *
+ * @param array<string,string> $links List of links.
+ * @param string               $file The requested plugin file name.
+ *
+ * @return array<string,string>
+ */
+function media_attached_filter_add_row_meta_links( array $links, string $file ): array {
+	// bail if this is not our plugin.
+	if ( __FILE__ !== WP_PLUGIN_DIR . DIRECTORY_SEPARATOR . $file ) {
+		return $links;
+	}
+
+	// add our custom links.
+	$row_meta = array(
+		'support' => '<a href="https://wordpress.org/support/plugin/media-attached-filter/" target="_blank" title="' . esc_html__( 'Support Forum', 'media-attached-filter' ) . '">' . esc_html__( 'Support Forum', 'media-attached-filter' ) . '</a>',
+	);
+
+	// return the resulting list of links.
+	return array_merge( $links, $row_meta );
+}
+add_filter( 'plugin_row_meta', 'media_attached_filter_add_row_meta_links', 10, 2 );
